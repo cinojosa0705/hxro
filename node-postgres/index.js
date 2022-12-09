@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port = 3001;
+const port = 3002;
 
 const parislots_model = require("./parislots_model");
 const dext_trg_model = require("./dext_trg_model");
@@ -17,9 +17,9 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.get("/", (req, res) => {
+app.get("/slots", (req, res) => {
   parislots_model
-    .getMerchants()
+    .getSlots()
     .then((response) => {
       res.status(200).send(response);
     })
@@ -28,9 +28,9 @@ app.get("/", (req, res) => {
     });
 });
 
-app.post("/merchants", (req, res) => {
-  merchant_model
-    .createMerchant(req.body)
+app.get("/dext-trg", (req, res) => {
+  dext_trg_model
+    .getDextTrg()
     .then((response) => {
       res.status(200).send(response);
     })
@@ -39,9 +39,9 @@ app.post("/merchants", (req, res) => {
     });
 });
 
-app.delete("/merchants/:id", (req, res) => {
-  merchant_model
-    .deleteMerchant(req.params.id)
+app.get("/dext-vol", (req, res) => {
+  dextvol_model
+    .getDextVol()
     .then((response) => {
       res.status(200).send(response);
     })
@@ -49,6 +49,7 @@ app.delete("/merchants/:id", (req, res) => {
       res.status(500).send(error);
     });
 });
+
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);
 });
